@@ -1,0 +1,21 @@
+2023/1/30 2023/1/31
+Todo:
+  ✔ gin框架掌握 @done(23-01-30 09:27)
+  ✔ gorm掌握 @done(23-02-01 15:56)
+  ✔ 参数校验库 @done(23-01-30 10:59)
+  ✔ JWT @done(23-02-01 22:45)
+  ✔ Mysql复习/sqlx @done(23-02-01 15:56)
+  ✔ Redis复习/go-redis @done(23-02-01 17:58)
+  ☐ 依赖注入wrie
+  ✔ swagger @done(23-02-02 11:03)
+  ☐ logrous 日志库
+  ☐ viper 配置管理工具
+  ☐ zap 日志管理工具
+  ☐ mongoDB
+
+2023/2/1
+Todo:
+  ☐ RPC
+  ☐ protobuf
+  ☐ grpc
+  ☐ go-kit
