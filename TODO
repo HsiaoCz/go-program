@@ -6,11 +6,11 @@ Todo:
   ✔ JWT @done(23-02-01 22:45)
   ✔ Mysql复习/sqlx @done(23-02-01 15:56)
   ✔ Redis复习/go-redis @done(23-02-01 17:58)
-  ☐ 依赖注入wrie
+  ✔ 依赖注入wrie @done(23-02-03 21:07)
   ✔ swagger @done(23-02-02 11:03)
-  ☐ logrous 日志库
-  ☐ viper 配置管理工具
-  ☐ zap 日志管理工具
+  ✔ logrous 日志库 @done(23-02-03 00:41)
+  ✔ viper 配置管理工具 @done(23-02-03 00:41)
+  ✔ zap 日志管理工具 @done(23-02-03 00:41)
   ☐ mongoDB
 
 2023/2/1

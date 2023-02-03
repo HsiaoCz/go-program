@@ -35,3 +35,6 @@ NewPlayer()需要一个string类型的参数
 
 如果NewMonster()也需要一个string类型的参数
 生成的代码中NewMonster()也会传递这个参数
+
+查看wire库的细节
+[https://darjun.github.io/2020/03/02/godailylib/wire/] wire库
