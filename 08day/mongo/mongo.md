@@ -314,3 +314,112 @@ func main() {
   }()
 }
 ```
+
+第二种连接方式：
+
+```go
+package main
+
+import (
+  "context"
+  "go.mongodb.org/mongo-driver/mongo"
+  "go.mongodb.org/mongo-driver/mongo/options"
+  "log"
+)
+
+func main() {
+  clientOpts := options.Client().ApplyURI("mongodb://localhost:27017/?connect=direct")
+  client, err := mongo.Connect(context.TODO(), clientOpts)
+  if err != nil {
+      log.Fatal(err)
+  }
+}
+```
+
+还可以通过用户名密码连接
+
+```go
+package main
+
+import (
+  "context"
+  "go.mongodb.org/mongo-driver/mongo"
+  "go.mongodb.org/mongo-driver/mongo/options"
+  "log"
+)
+
+func main() {
+  credential := options.Credential{
+
+      Username: "username",
+      Password: "password",
+  }
+  clientOpts := options.Client().ApplyURI("mongodb://localhost:27017").SetAuth(credential)
+  // 上述可以直接使用带用户名和密码的uri连接
+  // clientOpts := options.Client().ApplyURI("mongodb://username:password@localhost:27017")
+  client, err := mongo.Connect(context.TODO(), clientOpts)
+  if err != nil {
+      log.Fatal(err)
+  }
+}
+```
+
+更多的连接方式查看这里[https://juejin.cn/post/6908063164726771719]
+
+通过配置方式连接
+
+```go
+package config
+
+import (
+  "time"
+
+  "go.mongodb.org/mongo-driver/mongo/options"
+  "go.mongodb.org/mongo-driver/mongo/readpref"
+)
+
+// MONGO SETTINGS
+var (
+  credentials = options.Credential{
+    AuthMechanism: "SCRAM-SHA-1",
+    AuthSource:    "anquan",
+    Username:      "ysj",
+    Password:      "123456",
+  }
+  // direct                = true
+  connectTimeout        = 10 * time.Second
+  hosts                 = []string{"localhost:27017", "localhost:27018"}
+  maxPoolSize    uint64 = 20
+  minPoolSize    uint64 = 5
+  readPreference        = readpref.Primary()
+  replicaSet            = "replicaSetDb"
+
+  // ClientOpts mongoClient 连接客户端参数
+  ClientOpts = &options.ClientOptions{
+    Auth:           &credentials,
+    ConnectTimeout: &connectTimeout,
+    //Direct:         &direct,
+    Hosts:          hosts,
+    MaxPoolSize:    &maxPoolSize,
+    MinPoolSize:    &minPoolSize,
+    ReadPreference: readPreference,
+    ReplicaSet:     &replicaSet,
+  }
+)
+
+// 在主模块中引入
+func main(){
+  client, err := mongo.Connect(context.TODO(), config.ClientOpts)
+  if err != nil {
+    log.Fatal(err)
+  }
+}
+```
+
+BSON这里区别一下JSON虽然我觉得很像
+使用mongo-driver操作mongodb需要用到该模块提供的bson。主要用来写查询的筛选条件filter、构造文档记录以及接收查询解码的值，也就是在go与mongo之间做序列化。其中，基本只会用到如下三种数据结构：
+
+bson.D{}: 对文档(Document)的有序描述，key-value以逗号分隔；
+bson.M{}: Map结构，key-value以冒号分隔，无序，使用最方便；
+bson.A{}: 数组结构，元素要求是有序的文档描述，也就是元素是bson.D{}类型。
+
