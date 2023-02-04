@@ -275,3 +275,42 @@ mongoDB使用$regex操作符来设置匹配字符串的正则表达式，可以�
 go get github.com/mongodb/mongo-go-driver
 ```
 
+连接mongoDB
+需要先new一个客户端，然后进行Connect;
+直接Connect的同时获得一个实例
+需要注意的是，对mongo的任何操作，包括Connect、CRUD、Disconnect等都离不开一个操作上下文的Context环境，需要一个context实例作为操作的第一个参数
+
+```go
+package main
+
+import (
+  "context"
+  "fmt"
+  "time"
+
+  "go.mongodb.org/mongo-driver/mongo"
+  "go.mongodb.org/mongo-driver/mongo/options"
+)
+
+func main() {
+  client, err := mongo.NewClient(options.Client().ApplyURI("mongodb://localhost:27017"))
+  if err != nil {
+    fmt.Errorf("client establish failed. err: %v", err)
+  }
+  // ctx
+  ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+  defer cancel()
+
+  // connect
+  if err = client.Connect(ctx); err == nil {
+    fmt.Println("connect to db success.")
+  }
+
+  // 实例化client后，延迟调用断开连接函数
+  defer func() {
+    if err = client.Disconnect(ctx); err != nil {
+      panic(err)
+    }
+  }()
+}
+```
