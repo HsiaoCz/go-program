@@ -259,5 +259,3 @@ mysql 8.0版本的创建用户:
 create user 'shaw'@'%' identified by 'hsiaocz123';
 GRANT ALL PRIVILEGES ON user.* TO 'shaw'@'%' WITH GRANT OPTION;
 flush privileges;
-
-这样就能用了
