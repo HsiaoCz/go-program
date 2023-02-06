@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 )
 
@@ -28,7 +29,10 @@ func main() {
 		Y: 20,
 	}
 	paramBytes, _ := json.Marshal(param)
-	resp, _ := http.Post(url, "application/json", bytes.NewReader(paramBytes))
+	resp, err := http.Post(url, "application/json", bytes.NewReader(paramBytes))
+	if err != nil {
+		log.Fatal(err)
+	}
 	defer resp.Body.Close()
 
 	respBytes, _ := io.ReadAll(resp.Body)
