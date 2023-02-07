@@ -1,0 +1,21 @@
+syntax="proto3";
+
+option go_package="hello_server/pb";
+
+package pb;
+
+//定义服务
+service Greeter{
+    //SayHello方法
+    rpc SayHello (HelloRequest) returns (HelloReponse){}
+}
+
+//请求消息
+message HelloRequest{
+    string name =1;
+}
+
+// 响应消息
+message HelloReponse{
+    string reply=1;
+}
