@@ -11,11 +11,11 @@ Todo:
   ✔ logrous 日志库 @done(23-02-03 00:41)
   ✔ viper 配置管理工具 @done(23-02-03 00:41)
   ✔ zap 日志管理工具 @done(23-02-03 00:41)
-  ☐ mongoDB
+  ✔ mongoDB @done(23-02-06 23:46)
 
 2023/2/1
 Todo:
-  ☐ RPC
+  ✔ RPC @done(23-02-06 23:46)
   ☐ protobuf
   ☐ grpc
   ☐ go-kit
