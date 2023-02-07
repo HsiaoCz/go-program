@@ -50,17 +50,27 @@ rpc SayHello(HelloRequest) returns (HelloResponse);
 
 2.服务器流式 rpc，其中客户端向服务器发送请求，获得一个流来读取一系列消息，客户端从返回的流中读取，直到没有更多的消息。grpc 保证在单个 rpc 调用中的消息是有序的
 
+客户端发出一个RPC请求，服务端与客户端之间建立一个单向的流，服务端可以向流中写入多个响应消息，最后主动关闭流；而客户端需要监听这个流，不断获取响应直到流关闭。应用场景举例：客户端向服务端发送一个股票代码，服务端就把该股票的实时数据源源不断的返回给客户端。
+
 ```protobuf
 rpc LostOfReplies(HelloRequest) returns (stream HelloResponse);
 ```
 
 3.客户端流式 rpc，其中客户端写入一系列消息将其发送到服务器，同样使用提供的流。一旦客户端完成了消息的写入，它就等待服务器读取消息并返回响应，同样，grpc 保证在单个 rpc 调用中对消息进行排序
 
+客户端传入多个请求对象，服务端返回一个响应结果。典型的应用场景举例：物联网终端向服务器上报数据、大数据流式计算等。
+
 ```protobuf
 rpc LostOfGreeetings(stream HelloRequest) returns (HelloResponse)
 ```
 
 4.双向流式 rpc,其中双方使用读写流发送一系列消息，两个流独立运行
+
+双向流式RPC即客户端和服务端均为流式的RPC，能发送多个请求对象也能接收到多个响应对象。典型应用示例：聊天应用等。
+
+```protobuf
+rpc BindiHello(stream HelloRequest)returns (stream HelloRequest);
+```
 
 **2.生成指定语言的代码**
 通常在客户端调用 api，在服务端实现相应的 api
